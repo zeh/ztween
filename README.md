@@ -37,12 +37,12 @@ These parameter names can be used as part of the parameters for a new tween:
  * `time`: time for the tween to be executed, in seconds *or* number of frames (see `useFrames`). Default is 0 (which does an immediate tween).
  * `delay`: delay to wait before the tween is executed, in seconds *or* number of frames (see `useFrames`). Default is 0.
  * `transition`: any function that takes one parameter `t` (0-1) and returns a new transformed `t` value to create different transition behaviors. This is used for tween update acceleration and deceleration. Common equations for this parameter are provided on the `Equations` class. Default is `Equations.none`, which produces a linear tween. See **Transitions**.
- * `onStart`: a function to be called when the tween starts. Works like a callback/event. See **Using events**.
- * `onStartParams`: parameters for the `onStart` function, as an `Array` of items. See **Using events**.
- * `onUpdate`: a function to be called when the tween update occurs. Works like a callback/event. See **Using events**.
- * `onUpdateParams`: parameters for the `onUpdate` function, as an `Array` of items. See **Using events**.
- * `onComplete`: a function to be called when the tween ends. Works like a callback/event. See **Using events**.
- * `onCompleteParams`: parameters for the `onComplete` function, as an `Array` of items. See **Using events**.
+ * `onStart`: a function to be called when the tween starts. Works like a callback/event. See **Using signals**.
+ * `onStartParams`: parameters for the `onStart` function, as an `Array` of items. See **Using signals**.
+ * `onUpdate`: a function to be called when the tween update occurs. Works like a callback/event. See **Using signals**.
+ * `onUpdateParams`: parameters for the `onUpdate` function, as an `Array` of items. See **Using signals**.
+ * `onComplete`: a function to be called when the tween ends. Works like a callback/event. See **Using signals**.
+ * `onCompleteParams`: parameters for the `onComplete` function, as an `Array` of items. See **Using signals**.
  
  * `useFrames`: a `Boolean` value that indicates whether the number used in `time` and `delay` represents frames. If set to `true`, this tween will have frame-based timing. If not, its duration time (and property update value) is based on real time (seconds). This dictates how time is controlled, not *when* updates are made; updates are always made on frame cycles. It is advised to always have this set as false, save on exceptional cases. Default is false.
  * TODO: Note: the above is not working on parameters; it only works when setting it on the tween property
@@ -50,8 +50,76 @@ These parameter names can be used as part of the parameters for a new tween:
  
 ### Transitions
 
- * Todo...
+In ZTween, the *transition* parameter defines the function used when updating the values. By default, the transition used is a linear function, that is, the property being tweened will go from the initial value to the target value in a uniform fashion. But by using different *transition* functions - usually called *easing* functions - you can have different update speeds, usually giving the appearance of acceleration or deceleration of the value being updated.
 
-### Using events
+All the classic easing equations, as [introduced by Robert Penner](http://www.robertpenner.com/easing/), are bundled with ZTween. They are part of an additional class, `Equations`, and are as such:
 
- * Todo...
+ * `Equations.none`
+ * `Equations.quadIn`
+ * `Equations.quadOut`
+ * `Equations.quadInOut`
+ * `Equations.cubicIn`
+ * `Equations.cubicOut`
+ * `Equations.cubicInOut`
+ * `Equations.quartIn`
+ * `Equations.quartOut`
+ * `Equations.quartInOut`
+ * `Equations.quintIn`
+ * `Equations.quintOut`
+ * `Equations.quintInOut`
+ * `Equations.sineIn`
+ * `Equations.sineOut`
+ * `Equations.sineInOut`
+ * `Equations.expoIn`
+ * `Equations.expoOut`
+ * `Equations.expoInOut`
+ * `Equations.circIn`
+ * `Equations.circOut`
+ * `Equations.circInOut`
+ * `Equations.elasticIn`
+ * `Equations.elasticOut`
+ * `Equations.elasticInOut`
+ * `Equations.backIn`
+ * `Equations.backOut`
+ * `Equations.backInOut`
+ * `Equations.bounceIn`
+ * `Equations.bounceOut`
+ * `Equations.bounceInOut`
+
+### Using signals
+
+For event-like behavior, ZTween uses *signals*, an approach based on Robert Penner's [AS3Signals](https://github.com/robertpenner/as3-signals) project. This allows faster, easy-to-use callbacks to functions to be fired when certain events occur with specific tweens.
+
+The signals currently available for tweens are as such:
+
+ * `onStart`: called when a tween starts
+ * `onUpdate`: called when a tween update occurs
+ * `onComplete`: called when a tween ends
+
+There are two ways to define the signals used by a tween in ZTween. The first method is when creating a new tween:
+
+	ZTween.add(this, {x:10}, {time:2, onComplete:myOnCompleteFunction});`
+
+Or when assigning it to an existing ZTween instance:
+
+	var myTween:ZTween = ZTween.add(this, {x:10}, {time:2});
+	myTween.onComplete.add(myOnCompleteFunction);
+
+In both of the cases above, the function `myOnCompleteFunction` will be called when the tween finishes executing.
+
+The latter method has one advantage: you can attach several different functions to the same signal. For example:
+
+	var myTween:ZTween = ZTween.add(this, {x:10}, {time:2});
+	myTween.onComplete.add(myOnCompleteFunction);
+	myTween.onComplete.add(myOtherOnCompleteFunction);
+ 
+In the above example, both `myOnCompleteFunction` and `myOtherOnCompleteFunction` will be called when a tween finishes executing.
+
+### Todo
+
+ * Better documentation
+ * Decide whether to allow new ZTween() constructor or not, or get rid of ZTween.add() in favor of it
+ * Make sure useFrames work
+ * Add equationParams
+ * Properly document Equations.combined()
+ * Not sure if all equations are working, since I cleaned them up a little bit and rewrote some of them
