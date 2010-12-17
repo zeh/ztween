@@ -10,6 +10,7 @@ package com.zehfernando.transitions {
 
 		/*
 		Versions
+		1.3.3	2010-12-17	fixed: ZTweenSignal.remove() was not checking properly if a signal existed properly (thanks to github.com/hankpillow)
 		1.3.2	2010-09-07	fixed: stupid bug on onStart/onComplete/onUpdate getter/setters
 		1.3.1				added onStartParams, onUpdateParams, onCompleteParams
 		1.2.1				signals now have getters
