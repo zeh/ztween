@@ -10,6 +10,7 @@ package com.zehfernando.transitions {
 
 		/*
 		Versions
+		1.4.3	2011-05-23	added: updateTime()
 		1.3.3	2010-12-17	fixed: ZTweenSignal.remove() was not checking properly if a signal existed properly (thanks to github.com/hankpillow)
 		1.3.2	2010-09-07	fixed: stupid bug on onStart/onComplete/onUpdate getter/setters
 		1.3.1				added onStartParams, onUpdateParams, onCompleteParams
@@ -206,6 +207,11 @@ package com.zehfernando.transitions {
 			return affectTweens(removeTweenByIndex, __target, __args);
 		}
 		*/
+
+		public static function updateTime(): void {
+			// Force a time update - should only be used after complex calculations that take a lot more than a frame
+			currentTime = getTimer();
+		}
 
 		public static function remove(__target:Object, ...__props): Boolean {
 			// TODO: mark for removal, but don't remove immediately
