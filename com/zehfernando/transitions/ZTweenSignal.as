@@ -4,14 +4,14 @@ package com.zehfernando.transitions {
 	 * @author zeh
 	 */
 	public class ZTweenSignal {
-		
+
 		// Super-simple signals class inspired by Robert Penner's AS3Signals:
 		// http://github.com/robertpenner/as3-signals
-		
+
 		// Properties
 		protected var functions:Vector.<Function>;
 		protected var params:Vector.<Array>;
-		
+
 		// Properties for speed
 		protected var i:int;
 		protected var l:int;
@@ -47,7 +47,7 @@ package com.zehfernando.transitions {
 			}
 			return false;
 		}
-		
+
 		public function dispatch(): void {
 			for (i = 0; i < l; i++) {
 				functions[i].apply(undefined, params[i]);

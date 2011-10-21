@@ -10,7 +10,7 @@ package com.zehfernando.transitions {
 		public var name:String;
 
 		public var valueChange:Number;					// Change needed in value (cache)
-		
+
 		public function ZTweenProperty(__name:String, __valueComplete:Number) {
 			name			= __name;
 			valueComplete	= __valueComplete;
@@ -21,6 +21,6 @@ package com.zehfernando.transitions {
 			//modifierFunction 	=	p_modifierFunction;
 			//modifierParameters	=	p_modifierParameters;
 		}
-		
+
 	}
 }

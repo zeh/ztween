@@ -19,7 +19,7 @@ package com.zehfernando.transitions {
 		1.1.0				made the secondary parameters (time, transition, delay) into an object
 		1.0.0
 		*/
-		
+
 		// Static properties
 		public static var currentTime:int;					// The current time. This is generic for all tweenings for a "time grid" based update
 		public static var currentTimeFrame:int;				// The current frame. Used on frame-based tweenings
@@ -44,7 +44,7 @@ package com.zehfernando.transitions {
 		//private var skipUpdates				:uint;			// How many updates should be skipped (default = 0; 1 = update-skip-update-skip...)
 		//private var updatesSkipped			:uint;			// How many updates have already been skipped
 		protected var started					:Boolean;		// Whether or not this tween has already started executing
-		
+
 		protected var _onStart					:ZTweenSignal;
 		protected var _onUpdate					:ZTweenSignal;
 		protected var _onComplete				:ZTweenSignal;
@@ -52,36 +52,36 @@ package com.zehfernando.transitions {
 		// External properties
 		protected var _paused					:Boolean;		// Whether or not this tween is currently paused
 		protected var _useFrames				:Boolean;		// Whether or not to use frames instead of seconds
-		
+
 		// Temporary variables to avoid disposal
 		protected var t							:Number;		// Current time (0-1)
 		protected var tProperty					:ZTweenProperty;	// Property being checked
 		protected var pv						:Number;		// Property value
 		protected var i							:int;			// Loop iterator
 		protected var cTime						:int;			// Current engine time (in frames or seconds)
-		
+
 		// Temp vars
 		protected static var i:uint;
 		protected static var l:uint;
-		
+
 		// ================================================================================================================
 		// STATIC PSEUDO-CONSTRUCTOR --------------------------------------------------------------------------------------
 
 		{
 			init();
 		}
-		
+
 		protected static function init(): void {
 			// Starts the engine
 		//	tweens = new Vector.<ZTween>(); // This can't be here, so it's moved to the property initialization
-			
+
 			eventContainer = new Sprite();
 			eventContainer.addEventListener(Event.ENTER_FRAME, frameTick);
-			
+
 			currentTimeFrame = 0;
 			currentTime = getTimer();
 		}
-	
+
 		// ================================================================================================================
 		// CONSTRUCTOR ----------------------------------------------------------------------------------------------------
 
@@ -91,7 +91,7 @@ package com.zehfernando.transitions {
 		 * @param	p_scope				Object		Object that this tweening refers to.
 		 */
 		public function ZTween(__target:Object, __properties:Object = null, __parameters:Object = null) {
-			
+
 			_target				=	__target;
 
 			properties			=	new Vector.<ZTweenProperty>();
@@ -112,17 +112,17 @@ package com.zehfernando.transitions {
 			_onStart			=	new ZTweenSignal();
 			_onUpdate			=	new ZTweenSignal();
 			_onComplete			=	new ZTweenSignal();
-			
+
 			// Read parameters
 			if (Boolean(__parameters)) {
 				pv = __parameters["time"];
 				if (pv is Number && !isNaN(pv)) time = pv;
-				
+
 				pv = __parameters["delay"];
 				if (pv is Number && !isNaN(pv)) delay = pv;
-	
+
 				if (Boolean(__parameters["transition"])) transition = __parameters["transition"];
-				
+
 				if (Boolean(__parameters["onStart"])) _onStart.add(__parameters["onStart"], __parameters["onStartParams"]);
 				if (Boolean(__parameters["onUpdate"])) _onUpdate.add(__parameters["onUpdate"], __parameters["onUpdateParams"]);
 				if (Boolean(__parameters["onComplete"])) _onComplete.add(__parameters["onComplete"], __parameters["onCompleteParams"]);
@@ -130,7 +130,7 @@ package com.zehfernando.transitions {
 			//transitionParams	=	new Array();
 
 			_useFrames			=	false;
-			
+
 			_paused				=	false;
 			//skipUpdates		=	0;
 			//updatesSkipped	=	0;
@@ -147,13 +147,13 @@ package com.zehfernando.transitions {
 
 		// ==================================================================================================================================
 		// ENGINE functions -----------------------------------------------------------------------------------------------------------------
-	
+
 		/**
 		 * Updates all existing tweenings.
 		 */
 		protected static function updateTweens(): void {
 			//trace ("updateTweens");
-			
+
 			l = tweens.length;
 			for (i = 0; i < l; i++) { // ++i had no impact, must test more
 				if (!Boolean(tweens[i]) || !tweens[i].update(currentTime, currentTimeFrame)) {
@@ -170,10 +170,10 @@ package com.zehfernando.transitions {
 		protected static function frameTick(e:Event):void {
 			// Update time
 			currentTime = getTimer();
-			
+
 			// Update frame
 			currentTimeFrame++;
-			
+
 			// Update all tweens
 			updateTweens();
 		}
@@ -202,7 +202,7 @@ package com.zehfernando.transitions {
 			//for (i = 0; i < l; i++) {
 			//	properties.push(args[i]);
 			//}
-			
+
 			// Call the affect function on the specified properties
 			return affectTweens(removeTweenByIndex, __target, __args);
 		}
@@ -218,7 +218,7 @@ package com.zehfernando.transitions {
 			//var tl:Vector.<ZTween> = getTweens(__target, __props);
 
 			var tl:Vector.<ZTween> = new Vector.<ZTween>();
-			
+
 			var l:int = tweens.length;
 			var i:int;
 			var j:int;
@@ -241,7 +241,7 @@ package com.zehfernando.transitions {
 			}
 
 			var removedAny:Boolean;
-			
+
 			l = tl.length;
 
 			for (i = 0; i < l; i++) {
@@ -249,7 +249,7 @@ package com.zehfernando.transitions {
 				removeTweenByIndex(j);
 				removedAny = true;
 			}
-			
+
 			return removedAny;
 		}
 
@@ -274,14 +274,14 @@ package com.zehfernando.transitions {
 					}
 				}
 			}
-			
+
 			return false;
 
 		}
 
 		public static function getTweens(__target:Object, ...__props): Vector.<ZTween> {
 			var tl:Vector.<ZTween> = new Vector.<ZTween>();
-			
+
 			var l:int = tweens.length;
 			var i:int;
 			var j:int;
@@ -309,15 +309,15 @@ package com.zehfernando.transitions {
 
 			return tl;
 		}
-		
+
 		public static function pause(__target:Object, ...__props): Boolean {
 			var pausedAny:Boolean = false;
-			
+
 			var ftweens:Vector.<ZTween> = getTweens.apply(null, [__target].concat(__props));
 			var i:int;
-			
+
 			//trace ("ZTween :: pause() :: pausing tweens for " + __target + ": " + ftweens.length + " actual tweens");
-					
+
 			// TODO: use filter/apply?
 			for (i = 0; i < ftweens.length; i++) {
 				if (!ftweens[i].paused) {
@@ -325,16 +325,16 @@ package com.zehfernando.transitions {
 					pausedAny = true;
 				}
 			}
-			
+
 			return pausedAny;
 		}
 
 		public static function resume(__target:Object, ...__props): Boolean {
 			var resumedAny:Boolean = false;
-			
+
 			var ftweens:Vector.<ZTween> = getTweens.apply(null, [__target].concat(__props));
 			var i:int;
-			
+
 			// TODO: use filter/apply?
 			for (i = 0; i < ftweens.length; i++) {
 				if (ftweens[i].paused) {
@@ -342,7 +342,7 @@ package com.zehfernando.transitions {
 					resumedAny = true;
 				}
 			}
-			
+
 			return resumedAny;
 		}
 
@@ -371,9 +371,9 @@ package com.zehfernando.transitions {
 		/*
 		private static function affectTweens (__affectFunction:Function, __target:Object, __properties:Array):Boolean {
 			var affected:Boolean = false;
-			
+
 			l = tweens.length;
-			
+
 			for (i = 0; i < l; i++) {
 				if (tweens[i].target == __target) {
 					if (__properties.length == 0) {
@@ -415,41 +415,41 @@ package com.zehfernando.transitions {
 
 		// Event interceptors for caching
 		public function update(currentTime:int, currentTimeFrame:int): Boolean {
-			
+
 			if (_paused) return true;
-			
+
 			cTime = _useFrames ? currentTimeFrame : currentTime;
 
 			if (started || cTime >= timeStart) {
 				if (!started) {
 					_onStart.dispatch();
-					
+
 					for (i = 0; i < properties.length; i++) {
 						// Property value not initialized yet
 						tProperty = ZTweenProperty(properties[i]);
-						
+
 						// Directly read property
 						pv = _target[tProperty.name];
-	
+
 						tProperty.valueStart = isNaN(pv) ? tProperty.valueComplete : pv; // If the property has no value, use the final value as the default
 						tProperty.valueChange = tProperty.valueComplete - tProperty.valueStart;
 					}
 					started = true;
 				}
-			
+
 				if (cTime >= timeComplete) {
 					// Tweening time has finished, just set it to the final value
 					for (i = 0; i < properties.length; i++) {
 						tProperty = ZTweenProperty(properties[i]);
 						_target[tProperty.name] = tProperty.valueComplete;
 					}
-				
+
 					_onUpdate.dispatch();
-					
+
 					_onComplete.dispatch();
-					
+
 					return false;
-					
+
 				} else {
 					// Tweening must continue
 					t = transition((cTime - timeStart) / timeDuration);
@@ -457,23 +457,23 @@ package com.zehfernando.transitions {
 						tProperty = ZTweenProperty(properties[i]);
 						_target[tProperty.name] = tProperty.valueStart + t * tProperty.valueChange;
 					}
-					
+
 					_onUpdate.dispatch();
 				}
-				
+
 			}
-			
+
 			return true;
 
 		}
-		
+
 		public function pause(): void {
 			if (!_paused) {
 				_paused = true;
-				timePaused = _useFrames ? ZTween.currentTimeFrame : ZTween.currentTime; 
+				timePaused = _useFrames ? ZTween.currentTimeFrame : ZTween.currentTime;
 			}
 		}
-		
+
 		public function resume(): void {
 			if (_paused) {
 				_paused = false;
@@ -483,7 +483,7 @@ package com.zehfernando.transitions {
 			}
 		}
 
-		
+
 		// ==================================================================================================================================
 		// ACESSOR functions ----------------------------------------------------------------------------------------------------------------
 
@@ -543,7 +543,7 @@ package com.zehfernando.transitions {
 		public function set target(target:Object):void {
 			_target = target;
 		}
-		
+
 		public function get onStart(): ZTweenSignal {
 			return _onStart;
 		}
