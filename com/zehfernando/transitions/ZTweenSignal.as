@@ -39,9 +39,10 @@ package com.zehfernando.transitions {
 		}
 
 		public function remove(__function:Function, __params:Array = null): Boolean {
-			if (functions.indexOf(__function) > -1) {
-				functions.splice(functions.indexOf(__function), 1);
-				params.push(__params);
+			i = functions.indexOf(__function);
+			if (i > -1) {
+				functions.splice(i, 1);
+				params.splice(i, 1);
 				l = functions.length;
 				return true;
 			}
