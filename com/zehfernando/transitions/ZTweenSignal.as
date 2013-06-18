@@ -28,7 +28,7 @@ package com.zehfernando.transitions {
 		// ================================================================================================================
 		// PUBLIC INTERFACE -----------------------------------------------------------------------------------------------
 
-		public function add(__function:Function, __params:Array = null): Boolean {
+		public function add(__function:Function, __params:Array = null):Boolean {
 			if (functions.indexOf(__function) == -1) {
 				functions.push(__function);
 				params.push(__params);
@@ -38,7 +38,7 @@ package com.zehfernando.transitions {
 			return false;
 		}
 
-		public function remove(__function:Function, __params:Array = null): Boolean {
+		public function remove(__function:Function, __params:Array = null):Boolean {
 			if (functions.indexOf(__function) > -1) {
 				functions.splice(functions.indexOf(__function), 1);
 				params.push(__params);
@@ -48,7 +48,7 @@ package com.zehfernando.transitions {
 			return false;
 		}
 
-		public function dispatch(): void {
+		public function dispatch():void {
 			for (i = 0; i < l; i++) {
 				functions[i].apply(undefined, params[i]);
 				//functions[i]();

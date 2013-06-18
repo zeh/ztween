@@ -71,7 +71,7 @@ package com.zehfernando.transitions {
 			init();
 		}
 
-		protected static function init(): void {
+		protected static function init():void {
 			// Starts the engine
 		//	tweens = new Vector.<ZTween>(); // This can't be here, so it's moved to the property initialization
 
@@ -140,7 +140,7 @@ package com.zehfernando.transitions {
 		// ================================================================================================================
 		// INTERNAL functions ---------------------------------------------------------------------------------------------
 
-		protected function updateCache(): void {
+		protected function updateCache():void {
 			timeDuration = timeComplete - timeStart;
 		}
 
@@ -151,7 +151,7 @@ package com.zehfernando.transitions {
 		/**
 		 * Updates all existing tweenings.
 		 */
-		protected static function updateTweens(): void {
+		protected static function updateTweens():void {
 			//trace ("updateTweens");
 
 			l = tweens.length;
@@ -195,7 +195,7 @@ package com.zehfernando.transitions {
 		 * Remove tweenings for a given object from the active tweening list.
 		 */
 		/*
-		public static function remove(__target:Object, ...__args): Boolean {
+		public static function remove(__target:Object, ...__args):Boolean {
 			// Create the list of valid property list
 			//var properties:Vector.<String> = new Vector.<String>();
 			//l = args["length"];
@@ -208,12 +208,12 @@ package com.zehfernando.transitions {
 		}
 		*/
 
-		public static function updateTime(): void {
+		public static function updateTime():void {
 			// Force a time update - should only be used after complex calculations that take a lot more than a frame
 			currentTime = getTimer();
 		}
 
-		public static function remove(__target:Object, ...__props): Boolean {
+		public static function remove(__target:Object, ...__props):Boolean {
 			// TODO: mark for removal, but don't remove immediately
 			//var tl:Vector.<ZTween> = getTweens(__target, __props);
 
@@ -253,7 +253,7 @@ package com.zehfernando.transitions {
 			return removedAny;
 		}
 
-		public static function hasTween(__target:Object, ...__props): Boolean {
+		public static function hasTween(__target:Object, ...__props):Boolean {
 			//return (getTweens.apply(([__target] as Array).concat(__props)) as Vector.<ZTween>).length > 0;
 
 			var l:int = tweens.length;
@@ -310,7 +310,7 @@ package com.zehfernando.transitions {
 			return tl;
 		}
 
-		public static function pause(__target:Object, ...__props): Boolean {
+		public static function pause(__target:Object, ...__props):Boolean {
 			var pausedAny:Boolean = false;
 
 			var ftweens:Vector.<ZTween> = getTweens.apply(null, [__target].concat(__props));
@@ -329,7 +329,7 @@ package com.zehfernando.transitions {
 			return pausedAny;
 		}
 
-		public static function resume(__target:Object, ...__props): Boolean {
+		public static function resume(__target:Object, ...__props):Boolean {
 			var resumedAny:Boolean = false;
 
 			var ftweens:Vector.<ZTween> = getTweens.apply(null, [__target].concat(__props));
@@ -352,7 +352,7 @@ package com.zehfernando.transitions {
 		 * @param		p_tween				Number		Index of the tween to be removed on the tweenings list
 		 * @return							Boolean		Whether or not it successfully removed this tweening
 		 */
-		public static function removeTweenByIndex(__i:Number): void {
+		public static function removeTweenByIndex(__i:Number):void {
 			//__finalRemoval:Boolean = false
 			tweens[__i] = null;
 			//if (__finalRemoval) tweens.splice(__i, 1);
@@ -414,7 +414,7 @@ package com.zehfernando.transitions {
 		// PUBLIC INSTANCE functions --------------------------------------------------------------------------------------
 
 		// Event interceptors for caching
-		public function update(currentTime:int, currentTimeFrame:int): Boolean {
+		public function update(currentTime:int, currentTimeFrame:int):Boolean {
 
 			if (_paused) return true;
 
@@ -467,14 +467,14 @@ package com.zehfernando.transitions {
 
 		}
 
-		public function pause(): void {
+		public function pause():void {
 			if (!_paused) {
 				_paused = true;
 				timePaused = _useFrames ? ZTween.currentTimeFrame : ZTween.currentTime;
 			}
 		}
 
-		public function resume(): void {
+		public function resume():void {
 			if (_paused) {
 				_paused = false;
 				var timeNow:Number = _useFrames ? ZTween.currentTimeFrame : ZTween.currentTime;
@@ -487,33 +487,33 @@ package com.zehfernando.transitions {
 		// ==================================================================================================================================
 		// ACESSOR functions ----------------------------------------------------------------------------------------------------------------
 
-		public function get delay(): Number {
+		public function get delay():Number {
 			return (timeStart - timeCreated) / (_useFrames ? 1 : 1000);
 		}
 
-		public function set delay(__value:Number): void {
+		public function set delay(__value:Number):void {
 			timeStart = timeCreated + (__value * (_useFrames ? 1 : 1000));
 			timeComplete = timeStart + timeDuration;
 			//updateCache();
 			// TODO: take pause into consideration!
 		}
 
-		public function get time(): Number {
+		public function get time():Number {
 			return (timeComplete - timeStart) / (_useFrames ? 1 : 1000);
 		}
 
-		public function set time(__value:Number): void {
+		public function set time(__value:Number):void {
 			timeComplete = timeStart + (__value * (_useFrames ? 1 : 1000));
 			updateCache();
 			// TODO: take pause into consideration!
 		}
 
-		public function get paused(): Boolean {
+		public function get paused():Boolean {
 			return _paused;
 		}
 
 		/*
-		public function set paused(p_value:Boolean): void {
+		public function set paused(p_value:Boolean):void {
 			if (p_value == _paused) return;
 			_paused = p_value;
 			if (paused) {
@@ -524,11 +524,11 @@ package com.zehfernando.transitions {
 		}
 		*/
 
-		public function get useFrames(): Boolean {
+		public function get useFrames():Boolean {
 			return _useFrames;
 		}
 
-		public function set useFrames(__value:Boolean): void {
+		public function set useFrames(__value:Boolean):void {
 			var tDelay:Number = delay;
 			var tTime:Number = time;
 			_useFrames = __value;
