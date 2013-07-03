@@ -313,7 +313,7 @@ package com.zehfernando.transitions {
 		public static function pause(__target:Object, ...__props):Boolean {
 			var pausedAny:Boolean = false;
 
-			var ftweens:Vector.<ZTween> = getTweens.apply(null, [__target].concat(__props));
+			var ftweens:Vector.<ZTween> = getTweens.apply(null, ([__target]).concat(__props));
 			var i:int;
 
 			//trace ("ZTween :: pause() :: pausing tweens for " + __target + ": " + ftweens.length + " actual tweens");
@@ -332,7 +332,7 @@ package com.zehfernando.transitions {
 		public static function resume(__target:Object, ...__props):Boolean {
 			var resumedAny:Boolean = false;
 
-			var ftweens:Vector.<ZTween> = getTweens.apply(null, [__target].concat(__props));
+			var ftweens:Vector.<ZTween> = getTweens.apply(null, ([__target]).concat(__props));
 			var i:int;
 
 			// TODO: use filter/apply?
