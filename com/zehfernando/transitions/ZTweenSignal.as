@@ -38,7 +38,7 @@ package com.zehfernando.transitions {
 			return false;
 		}
 
-		public function remove(__function:Function): Boolean {
+		public function remove(__function:Function):Boolean {
 			i = functions.indexOf(__function);
 			if (i > -1) {
 				functions.splice(i, 1);

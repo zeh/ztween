@@ -214,9 +214,6 @@ package com.zehfernando.transitions {
 		}
 
 		public static function remove(__target:Object, ...__props):Boolean {
-			// TODO: mark for removal, but don't remove immediately
-			//var tl:Vector.<ZTween> = getTweens(__target, __props);
-
 			var tl:Vector.<ZTween> = new Vector.<ZTween>();
 
 			var l:int = tweens.length;
